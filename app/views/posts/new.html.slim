@@ -3,10 +3,10 @@ p Find me in app/views/posts/new.html.slim
 = form_for @post do |f|
   = f.label :Title
   br
-  = f.text_field :title
+  = f.text_field :title, size: '45'
   br
   = f.label :Description
   br
-  = f.text_field :description
+  = f.text_area :description, size: "33x20" 
   br
   = f.submit :Create

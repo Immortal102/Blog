@@ -7,7 +7,7 @@ p Find me in app/views/posts/index.html.slim
     ' Post #{post.id} with title
     = link_to post.title, post_path(post)
     br
-    | <<< #{post.description} >>>
+    | <<< #{post.description[0..150]} >>>
     br
     i
       ' by #{post.user.email}

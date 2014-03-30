@@ -2,10 +2,10 @@ h1 Posts#edit
 = form_for @post do |f|
   = f.label :Title
   br
-  = f.text_field :title
+  = f.text_field :title, size: '45'
   br
   = f.label :Description
   br
-  = f.text_field :description
+  = f.text_area :description, size: '33x8'
   br
   = f.submit :Change

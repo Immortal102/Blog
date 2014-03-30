@@ -1,7 +1,6 @@
-h1 Posts#show
-
-' Now you show the post
-b #{@post.title}
+h3
+  ' Now you show the post
+  b "#{@post.title}"
 br
 = @post.description
 br
@@ -17,7 +16,7 @@ br
   = form_for Comment.new, remote: true do |f|
     i #{f.label 'Your comment'}
     br
-    = f.text_field :body
+    = f.text_area :body, size: "33x8"
     = f.hidden_field :post_id, value: @post.id
     br
     = f.submit :Add  
@@ -26,9 +25,9 @@ div id = 'comments'
     h4
       i COMMENTS
     - @comments.each do |comment|
-      #{'.'*50}
+      | #{'.'*50}
       br
-      div id = 'comment #{comment.id}'
+      div id = 'comment#{comment.id}'
         | <<< #{comment.body} >>>
         br
         ' From
