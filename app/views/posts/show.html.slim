@@ -1,0 +1,41 @@
+h1 Posts#show
+
+' Now you show the post
+b #{@post.title}
+br
+= @post.description
+br
+|#{'-'*50}
+br
+- if user_signed_in?
+  - if @post.owner?(current_user)
+    ' #{link_to 'Change', edit_post_path(@post)}
+    ' |
+    = link_to 'Delete', post_path(@post), method: :delete
+  br
+  br
+  = form_for Comment.new, remote: true do |f|
+    i #{f.label 'Your comment'}
+    br
+    = f.text_field :body
+    = f.hidden_field :post_id, value: @post.id
+    br
+    = f.submit :Add  
+div id = 'comments'
+  - unless @comments.blank?
+    h4
+      i COMMENTS
+    - @comments.each do |comment|
+      #{'.'*50}
+      br
+      div id = 'comment #{comment.id}'
+        | <<< #{comment.body} >>>
+        br
+        ' From
+        = comment.user.email
+        br
+        - if user_signed_in? && comment.owner?(current_user)
+          = link_to 'Remove', comment_path(comment), method: :delete, remote: true
+        br
+        | #{'.'*50}
+        br

@@ -1,0 +1,13 @@
+div id = 'comment #{@comment.id}'
+  #{'.'*50}
+  br
+  | <<< #{@comment.body} >>>
+  br
+  ' From
+  = @comment.user.email
+  br
+  - if user_signed_in? && @comment.owner?(current_user)
+    = link_to 'Remove', comment_path(@comment), method: :delete, remote: true
+  br
+  | #{'.'*50}
+  br

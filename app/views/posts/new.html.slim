@@ -1,0 +1,12 @@
+h1 Posts#new
+p Find me in app/views/posts/new.html.slim
+= form_for @post do |f|
+  = f.label :Title
+  br
+  = f.text_field :title
+  br
+  = f.label :Description
+  br
+  = f.text_field :description
+  br
+  = f.submit :Create
