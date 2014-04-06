@@ -11,10 +11,10 @@ class CommentsController < ApplicationController
 
   def create
     respond_to do |format|
-      format.html {}
       format.js do
         current_user.comments<<Comment.create(params[:comment])
-        @comment = Comment.last
+        @comment = current_user.comments.last
+        UserMailer.new_comment(@comment).deliver unless @comment.post.owner?(current_user)
       end  
     end
   end
@@ -23,9 +23,19 @@ class CommentsController < ApplicationController
   end
 
   def edit
+    respond_to do |format|
+      format.html {render 'public/404'}
+      format.js {@comment = Comment.find(params[:id])}
+    end  
   end
 
   def update
+    respond_to do |format|
+      format.js do 
+        @comment = Comment.find(params[:id])
+        @comment.update_attribute(:body, params[:comment][:body])
+      end
+    end
   end
 
   def destroy

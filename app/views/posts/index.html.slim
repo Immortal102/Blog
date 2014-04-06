@@ -1,23 +1,21 @@
-h1 Posts#index
-p Find me in app/views/posts/index.html.slim
--if @posts
-  - @posts.each do |post|
-    | #{'-'*50}
-    br
-    ' Post #{post.id} with title
-    = link_to post.title, post_path(post)
-    br
-    | <<< #{post.description[0..150]} >>>
-    br
-    i
-      ' by #{post.user.email}
-    br
-    br
-    i 
-      b Comments(#{post.comments.size})
-    br  
-    | #{'-'*50}
-    br
-- else
-  h3 There are not posts yet  
-= link_to 'Create new post', new_post_path if user_signed_in?
+-if user_signed_in?
+  .row-fluid
+    ul class="nav nav-tabs" id="myTab"
+      li.active= link_to "All Posts", '#posts'
+      li= link_to "My posts", '#my_posts'
+      li= link_to "My commented posts", '#commented_post'
+    .span9
+      div class="tab-content"
+        div class="tab-pane active" id="posts"
+          = render 'all_posts'
+          = link_to 'Create new post', new_post_path 
+        div class="tab-pane" id="my_posts"
+          = render 'my_posts'
+        div class="tab-pane" id="commented_post"
+          = render 'my_commented_posts'         
+-else
+  .row-fruid
+    = render 'all_posts'
+
+
+

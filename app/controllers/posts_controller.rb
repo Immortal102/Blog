@@ -4,6 +4,10 @@ class PostsController < ApplicationController
 
   def index
     @posts = Post.all
+    if user_signed_in?
+      @my_posts = current_user.posts
+      @my_comments = current_user.comments
+    end  
   end
 
   def new
@@ -16,12 +20,17 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find(params[:id])
-    @comments = @post.comments
+    begin
+      @post = Post.find(params[:id])
+      @comments = @post.comments
+    rescue ActiveRecord::RecordNotFound
+      render 'public/404'
+    end  
   end
 
   def edit
     @post = Post.find(params[:id])
+    render 'public/404' unless @post.owner?(current_user)
   end
 
   def update
@@ -30,7 +39,12 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    Post.find(params[:id]).destroy
-    redirect_to root_path
+    @post = Post.find(params[:id])
+    if @post.owner?(current_user)
+      @post.destroy
+      redirect_to root_path
+    else
+      render 'public/404'
+    end  
   end
 end

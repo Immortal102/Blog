@@ -1,0 +1,19 @@
+-if @my_posts
+  - @my_posts.each do |post|
+    br
+    ' Post #{post.id} with title
+    = link_to post.title, post_path(post)
+    br
+    | <<< #{post.description[0..150]} >>>
+    br
+    br
+    i
+      ' by #{post.user.email}
+    br
+    br
+    i 
+      b Comments(#{post.comments.size})
+    br  
+    br
+- else
+  h3 There are not posts yet 

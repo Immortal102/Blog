@@ -1,0 +1,2 @@
+var item = "#comments #comment" + <%= @comment.id.to_s %>
+$(item).html("<%= j (render partial: 'comments/comment') %>")
