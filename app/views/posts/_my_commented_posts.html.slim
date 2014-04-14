@@ -1,19 +1,16 @@
 -if @my_comments
   - @my_comments.each do |comm|
-    br
-    ' Post #{comm.post_id} with title
-    = link_to comm.post.title, post_path(comm.post_id)
-    br
-    | <<< #{comm.post.description[0..150]} >>>
-    br
-    br
-    i
-      ' by #{comm.post.user.email}
-    br
-    br
-    i 
-      b Comments(#{comm.post.comments.size})
-    br  
-    br
+    .post
+      .title
+        ' Post #{comm.post_id} with title
+        = link_to comm.post.title, post_path(comm.post_id)
+      .description  
+        == comm.post.description[0..150]
+      .owner  
+        i
+          ' by #{comm.post.user.email}
+      .comment
+        i 
+          b Comments(#{comm.post.comments.size})
 - else
-  h3 There are not posts yet 
+  h3 There are not posts yet

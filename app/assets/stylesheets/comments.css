@@ -1,0 +1,32 @@
+#comments {
+  width: 450px;
+  background: #F7FBFC;
+  border-radius: 20px;
+  position: relative;
+  padding: 20px;
+}
+#comment-body {
+  margin-top: 1px;
+  background: #E4F0F1;
+  padding: 5px;
+  position: relative;
+  border-radius: 10px;
+  min-width: 50px;
+  margin-bottom: 30px;
+}
+#comment-owner {
+  position: absolute;
+  left: 265px;
+  bottom: -17px;
+  background: #E4F0F1;
+  border-radius: 6px;
+}
+
+.comment-links {
+  position: absolute;
+  top: 0px;
+  right: 8px;
+  border: solid 1px #14D4EE;
+  border-radius: 30px;
+  padding: 3px;
+}

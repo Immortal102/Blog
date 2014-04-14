@@ -6,9 +6,6 @@ class CommentsController < ApplicationController
     @comments = Comment.all
   end
 
-  def new
-  end
-
   def create
     respond_to do |format|
       format.js do
@@ -19,10 +16,9 @@ class CommentsController < ApplicationController
     end
   end
 
-  def show
-  end
-
   def edit
+    #todo handle object creation outside format blocks. they required only for providing response
+    # todo any user can edit any post
     respond_to do |format|
       format.html {render 'public/404'}
       format.js {@comment = Comment.find(params[:id])}
@@ -30,6 +26,8 @@ class CommentsController < ApplicationController
   end
 
   def update
+    #todo handle object creation outside format blocks. they required only for providing response
+    # todo any user can edit any post
     respond_to do |format|
       format.js do 
         @comment = Comment.find(params[:id])
@@ -39,6 +37,8 @@ class CommentsController < ApplicationController
   end
 
   def destroy
+    #todo handle object creation outside format blocks. they required only for providing response
+    # todo any user can edit any post
     respond_to do |format|
       format.js  do
         @comment = Comment.find(params[:id])

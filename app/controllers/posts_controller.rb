@@ -15,8 +15,9 @@ class PostsController < ApplicationController
   end
 
   def create
-    current_user.posts<<Post.create(params[:post])
-    redirect_to root_path
+    post = Post.create(params[:post])
+    current_user.posts<<post
+    redirect_to post_path(post)
   end
 
   def show
@@ -29,11 +30,13 @@ class PostsController < ApplicationController
   end
 
   def edit
+    # todo any user can edit any post
     @post = Post.find(params[:id])
     render 'public/404' unless @post.owner?(current_user)
   end
 
   def update
+    # todo any user can edit any post
     Post.find(params[:id]).update_attributes(params[:post])
     redirect_to root_path
   end

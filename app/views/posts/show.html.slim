@@ -1,34 +1,27 @@
-h3
-  ' Now you show the post
-  b "#{@post.title}"
-br
-= @post.description
-br
-br
-- if user_signed_in?
-  - if @post.owner?(current_user)
-    = link_to 'Change', edit_post_path(@post)
-    = link_to 'Delete', post_path(@post), method: :delete
-  br
-  br 
-div id = 'comments'
+.post-show
+  .title= @post.title
+  .description
+    == @post.description
+  - if user_signed_in?
+    - if @post.owner?(current_user)
+      .links
+        = link_to image_tag("change.png", size: '16x16'), edit_post_path(@post)
+        = link_to image_tag("delete.png", size: '16x16'), post_path(@post), method: :delete
   h4
     i COMMENTS
-  - unless @comments.blank?
-    - @comments.each do |comment|
-      br
-      div id = 'comment#{comment.id}'
-        | <<< #{comment.body} >>>
-        br
-        ' From
-        = comment.user.email
-        br
-        - if user_signed_in? && comment.owner?(current_user)
-          = link_to 'Change', edit_comment_path(comment), remote: true
-          br
-          = link_to 'Remove', comment_path(comment), method: :delete, remote: true
-        br
-        br
+  #comments  
+    - unless @comments.blank?
+      - @comments.each do |comment|
+        div class = 'comment_#{comment.id}'
+          #comment-body
+            == comment.body
+            #comment-owner    
+              ' From
+              = comment.user.email
+            - if user_signed_in? && comment.owner?(current_user)
+              .comment-links
+                = link_to image_tag("change.png", size: '16x16'), edit_comment_path(comment), remote: true
+                = link_to image_tag("delete.png", size: '16x16'), comment_path(comment), method: :delete, remote: true
 - if user_signed_in?
   = form_for Comment.new, remote: true do |f|
     i #{f.label 'Your comment'}
@@ -37,3 +30,6 @@ div id = 'comments'
     = f.hidden_field :post_id, value: @post.id
     br
     = f.submit :Add 
+/ todo if comment body long..its out of div bounds
+/ todo ajax destroy without remains
+/ todo ajax additions with styles

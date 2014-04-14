@@ -1,8 +1,8 @@
 /. to do if update - dont show div
 /. -binding.pry
 
-div id = 'comment#{@comment.id}'
-  | <<< #{@comment.body} >>>
+div class = 'comment_#{@comment.id}'
+  == @comment.body
   br
   ' From
   = @comment.user.email
