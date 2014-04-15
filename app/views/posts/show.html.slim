@@ -15,9 +15,11 @@
         div class = 'comment_#{comment.id}'
           #comment_body
             == comment.body
-            #comment_owner    
-              ' From
-              = comment.user.email
+            #comment_owner
+              -if comment.user   
+                | From #{comment.user.email}
+              -else
+                | From deleted user 
             - if user_signed_in? && comment.owner?(current_user)
               .comment_links
                 = link_to image_tag("change.png", size: '16x16'), edit_comment_path(comment), remote: true

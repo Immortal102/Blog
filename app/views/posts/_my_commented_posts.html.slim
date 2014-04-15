@@ -6,9 +6,11 @@
         = link_to comm.post.title, post_path(comm.post_id)
       .description  
         == comm.post.description[0..150]
-      .owner  
-        i
-          ' by #{comm.post.user.email}
+      .owner
+        -if comm.post.user 
+          i by #{comm.post.user.email}
+        -else
+          i from deleted user  
       .comment
         i 
           b Comments(#{comm.post.comments.size})

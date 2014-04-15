@@ -12,3 +12,10 @@
  *= require_tree .
  *= require bootstrap-wysihtml5
  */
+.errors {
+  padding-left: 20px;
+  color: rgb(109, 37, 37);
+  background: rgb(240, 150, 150);
+  border-radius: 9px;
+  margin-bottom: 20px;
+}

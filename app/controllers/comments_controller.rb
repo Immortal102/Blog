@@ -25,6 +25,7 @@ class CommentsController < ApplicationController
   end
 
   def update
+    @comment.update_attributes(params[:comment])
     respond_to do |format|
       format.html {render 'public/404'}
       format.js

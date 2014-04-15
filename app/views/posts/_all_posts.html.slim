@@ -7,8 +7,10 @@
       .description  
         == post.description[0..150]
       .owner  
-        i
-          ' by #{post.user.email}
+        -if post.user
+           i by #{post.user.email}
+        -else
+          i from deleted user   
       .comment  
         i 
           b Comments(#{post.comments.size})
