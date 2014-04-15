@@ -6,20 +6,20 @@
     - if @post.owner?(current_user)
       .links
         = link_to image_tag("change.png", size: '16x16'), edit_post_path(@post)
-        = link_to image_tag("delete.png", size: '16x16'), post_path(@post), method: :delete
+        = link_to image_tag("delete.png", size: '16x16'), post_path(@post), method: :delete, data: { confirm: 'Are you sure?' }
   h4
     i COMMENTS
   #comments  
     - unless @comments.blank?
       - @comments.each do |comment|
         div class = 'comment_#{comment.id}'
-          #comment-body
+          #comment_body
             == comment.body
-            #comment-owner    
+            #comment_owner    
               ' From
               = comment.user.email
             - if user_signed_in? && comment.owner?(current_user)
-              .comment-links
+              .comment_links
                 = link_to image_tag("change.png", size: '16x16'), edit_comment_path(comment), remote: true
                 = link_to image_tag("delete.png", size: '16x16'), comment_path(comment), method: :delete, remote: true
 - if user_signed_in?
@@ -31,5 +31,3 @@
     br
     = f.submit :Add 
 / todo if comment body long..its out of div bounds
-/ todo ajax destroy without remains
-/ todo ajax additions with styles

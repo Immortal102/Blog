@@ -1,2 +1,8 @@
 var item = "#comments .comment_" + <%= @comment.id.to_s %>
-$(item).remove()
+$(item).animate({
+    opacity: 0.25,
+    left: "+=50",
+    height: "toggle"
+  }, 1000, function() {
+    $(item).remove()
+  });

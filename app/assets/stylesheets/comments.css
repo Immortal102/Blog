@@ -5,7 +5,7 @@
   position: relative;
   padding: 20px;
 }
-#comment-body {
+#comment_body {
   margin-top: 1px;
   background: #E4F0F1;
   padding: 5px;
@@ -14,7 +14,7 @@
   min-width: 50px;
   margin-bottom: 30px;
 }
-#comment-owner {
+#comment_owner {
   position: absolute;
   left: 265px;
   bottom: -17px;
@@ -22,7 +22,7 @@
   border-radius: 6px;
 }
 
-.comment-links {
+.comment_links {
   position: absolute;
   top: 0px;
   right: 8px;

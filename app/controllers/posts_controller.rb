@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
 
   before_filter :authenticate_user!, except: [:show, :index]
+  before_filter :check_owner, only: [:edit, :update, :destroy]
 
   def index
     @posts = Post.all
@@ -15,9 +16,13 @@ class PostsController < ApplicationController
   end
 
   def create
-    post = Post.create(params[:post])
-    current_user.posts<<post
-    redirect_to post_path(post)
+    @post = Post.new(params[:post])
+    if @post.valid?
+      current_user.posts<<@post
+      redirect_to post_path(@post), notice: 'Your post successfully created.'
+    else
+      render :new
+    end  
   end
 
   def show
@@ -30,24 +35,30 @@ class PostsController < ApplicationController
   end
 
   def edit
-    # todo any user can edit any post
-    @post = Post.find(params[:id])
-    render 'public/404' unless @post.owner?(current_user)
+
   end
 
   def update
-    # todo any user can edit any post
-    Post.find(params[:id]).update_attributes(params[:post])
-    redirect_to root_path
+    if @post.update_attributes(params[:post])
+      redirect_to root_path, notice: 'Your post successfully updated.'
+    else
+      render :edit
+    end
   end
 
   def destroy
-    @post = Post.find(params[:id])
-    if @post.owner?(current_user)
-      @post.destroy
-      redirect_to root_path
-    else
-      render 'public/404'
-    end  
+    @post.destroy
+    redirect_to root_path, notice: 'Was deleted successfully'
   end
+
+  private
+
+    def check_owner
+      @post = Post.find(params[:id])
+      if @post.owner?(current_user)
+        @post
+      else
+        render 'public/404'  
+      end
+    end
 end

@@ -1,2 +1,5 @@
-var item = "#comments .comment_" + <%= @comment.id.to_s %>
-$(item).append("<%= j (render 'edit_form') %>")
+var form_precence = $('.edit_comment')
+if (form_precence.length == 0) {
+  var item = "#comments .comment_" + <%= @comment.id.to_s %>
+  $(item).append("<%= j (render 'edit_form') %>")
+} 

@@ -1,50 +1,51 @@
 class CommentsController < ApplicationController
 
   before_filter :authenticate_user!, except: [:show, :index]
+  before_filter :check_owner, except: [:index, :create]
 
   def index
     @comments = Comment.all
   end
 
   def create
+    current_user.comments<<Comment.create(params[:comment])
+    @comment = current_user.comments.last
+    UserMailer.new_comment(@comment).deliver unless @comment.post.owner?(current_user)
     respond_to do |format|
       format.js do
-        current_user.comments<<Comment.create(params[:comment])
-        @comment = current_user.comments.last
-        UserMailer.new_comment(@comment).deliver unless @comment.post.owner?(current_user)
       end  
     end
   end
 
   def edit
-    #todo handle object creation outside format blocks. they required only for providing response
-    # todo any user can edit any post
     respond_to do |format|
       format.html {render 'public/404'}
-      format.js {@comment = Comment.find(params[:id])}
+      format.js {}
     end  
   end
 
   def update
-    #todo handle object creation outside format blocks. they required only for providing response
-    # todo any user can edit any post
     respond_to do |format|
-      format.js do 
-        @comment = Comment.find(params[:id])
-        @comment.update_attribute(:body, params[:comment][:body])
-      end
+      format.html {render 'public/404'}
+      format.js
     end
   end
 
   def destroy
-    #todo handle object creation outside format blocks. they required only for providing response
-    # todo any user can edit any post
+    @comment.destroy
     respond_to do |format|
-      format.js  do
-        @comment = Comment.find(params[:id])
-        @comment.destroy
-      end  
+      format.html {render 'public/404'}
+      format.js
     end  
   end
+
+  def check_owner
+      @comment = Comment.find(params[:id])
+      if @comment.owner?(current_user)
+        @comment
+      else
+        render 'public/404'
+      end    
+    end
   
 end

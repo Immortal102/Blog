@@ -1,3 +1,8 @@
+-if @post.errors.any?
+  .errors
+    ul 
+    - @post.errors.full_messages.each do |mes|
+      li= mes
 = form_for @post do |f|
   = f.label :Title
   br
