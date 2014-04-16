@@ -12,8 +12,8 @@ class CommentsController < ApplicationController
     @comment = current_user.comments.last
     UserMailer.new_comment(@comment).deliver unless @comment.post.owner?(current_user)
     respond_to do |format|
-      format.js do
-      end  
+      format.html {render 'public/404'}
+      format.js {}
     end
   end
 
@@ -25,11 +25,11 @@ class CommentsController < ApplicationController
   end
 
   def update
-    @comment.update_attributes(params[:comment])
-    respond_to do |format|
-      format.html {render 'public/404'}
-      format.js
-    end
+      @comment.update_attributes(params[:comment])
+      respond_to do |format|
+        format.html {render 'public/404'}
+        format.js  
+      end
   end
 
   def destroy

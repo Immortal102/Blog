@@ -4,7 +4,6 @@ class Post < ActiveRecord::Base
   attr_accessible :description, :title
   validates :title, :description, presence: true
   validates :title, length: { in: 3..51 }
-  # todo flash messages if not valid
 def owner?(user)
    user_id == user.id
    # todo can be better use active_record

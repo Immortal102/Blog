@@ -39,8 +39,6 @@ html lang="en"
     .container-fluid
           = bootstrap_flash
           .container
-            - flash.each do |key, value|
-              - content_tag(:div, value, class: "alert alert-#{key}")
           = yield
     
 footer
